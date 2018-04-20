@@ -13,18 +13,21 @@ Carga la base de datos de MySQL con el siguiente comando (por lo pronto solo se 
 cd sipega/autentificador/bd/
 
 # carga la base de datos
-mysql -u username -p database_name < Sipega.sql
+mysql -u root -p Sipega < Sipega.sql
 ```
 
 Para poder hacer uso de los microservicios se debe de asignar la variable de entorno `$DB_PASSWORD` con la contraseña a la base de datos MySQL:
 ```shell
-# asigna la variable de entorno
+# asigna la variable de entorno en linux
 export DB_PASSWORD=contraseña
+
+# asigna la variable de entorno en windows
+SET DB_PASSWORD=contraseña
 ```
 
 De manera alternativa, también se puede asignar la variable de un archivo para que no esté guardada en el historial:
 ```shell
-# asigna la variable de entorno desde un archivo
+# asigna la variable de entorno desde un archivo en linux
 export DB_PASSWORD=$(cat ruta_al_archivo)
 ```
 
@@ -93,5 +96,5 @@ Toma como argumentos el id del usuario, el id del privilegio y regresa el regist
 curl -X POST http://localhost:3000/usuario/1/privilegio/1 -d "lectura=TRUE&escritura=FALSE&ejecucion=TRUE"
 
 # consulta un acceso
-curl -X GET http://localhost:3000/usuario/1/privilegio/1 -d "lectura=TRUE&escritura=FALSE&ejecucion=TRUE"
+curl -X GET http://localhost:3000/usuario/1/privilegio/1
 ```
