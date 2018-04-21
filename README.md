@@ -1,3 +1,5 @@
+![Logo SIPEGA](/imagenes/SIPEGA.png)
+![Logo DATUM](/imagenes/DATUM.png)
 # Sistema de Planes de Estudio para Gestión Académica (SIPEGA)
 SIPEGA es un sistema de información diseñado para llevar a cabo procesos de gestión académica de una manera más eficiente y automatizada. Consta de diferentes componentes que se comunican entre sí por medio de un REST API escrito en javascript.
 
