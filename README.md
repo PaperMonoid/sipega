@@ -12,6 +12,13 @@ Carga la base de datos de MySQL con el siguiente comando (por lo pronto solo se 
 # se dirige al directorio donde se encuentra la base de datos
 cd sipega/autentificador/bd/
 
+# accede a mysql
+mysql -u root -p
+
+# crea la base de datos y sale
+CREATE DATABASE Sipega;
+exit
+
 # carga la base de datos
 mysql -u root -p Sipega < Sipega.sql
 ```
@@ -28,7 +35,19 @@ SET DB_PASSWORD=contraseña
 De manera alternativa, también se puede asignar la variable de un archivo para que no esté guardada en el historial:
 ```shell
 # asigna la variable de entorno desde un archivo en linux
-export DB_PASSWORD=$(cat ruta_al_archivo)
+export DB_PASSWORD=$(cat ruta_al_archivo.txt)
+
+# asigna la variable de entorno desde un archivo en windows
+set /p DB_PASSWORD=<ruta_al_archivo.txt
+```
+
+Se puede revisar si se asignó correctamente la variable de entorno de esta forma:
+```shell
+# muestra la variable de entorno en linux
+echo $DB_PASSWORD
+
+# muestra la variable de entorno en windows
+echo %DB_PASSWORD%
 ```
 
 Instala las dependencias necesarias e inicia los microservicios (por lo pronto solo se tiene el microservicio autentificador):
