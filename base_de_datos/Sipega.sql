@@ -1,8 +1,8 @@
--- MySQL dump 10.16  Distrib 10.2.14-MariaDB, for Linux (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.21, for Linux (x86_64)
 --
 -- Host: localhost    Database: Sipega
 -- ------------------------------------------------------
--- Server version	10.2.14-MariaDB
+-- Server version	5.7.21-0ubuntu0.17.10.1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -97,6 +97,55 @@ LOCK TABLES `DocenteUsuario` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `Grupo`
+--
+
+DROP TABLE IF EXISTS `Grupo`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `Grupo` (
+  `GrupoClave` char(10) NOT NULL,
+  `GrupoMateriaClave` char(10) NOT NULL,
+  `GrupoSemestre` tinyint(4) NOT NULL,
+  `GrupoDocenteNoControl` char(8) NOT NULL,
+  PRIMARY KEY (`GrupoClave`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Grupo`
+--
+
+LOCK TABLES `Grupo` WRITE;
+/*!40000 ALTER TABLE `Grupo` DISABLE KEYS */;
+/*!40000 ALTER TABLE `Grupo` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `Materia`
+--
+
+DROP TABLE IF EXISTS `Materia`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `Materia` (
+  `MateriaClave` char(10) NOT NULL,
+  `MateriaNombre` varchar(50) DEFAULT NULL,
+  `MateriaNombreAbreviado` varchar(25) DEFAULT NULL,
+  PRIMARY KEY (`MateriaClave`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Materia`
+--
+
+LOCK TABLES `Materia` WRITE;
+/*!40000 ALTER TABLE `Materia` DISABLE KEYS */;
+/*!40000 ALTER TABLE `Materia` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `Privilegio`
 --
 
@@ -155,4 +204,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-04-22 20:46:10
+-- Dump completed on 2018-04-22 21:23:07
