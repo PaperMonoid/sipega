@@ -1,85 +1,61 @@
 exports.consultar = json => conexion => {
-    const { noControl } = json
+    const { grupoClave } = json
     return conexion.query(
         `SELECT * ` +
-            `FROM Docente ` +
-            `WHERE DocenteNoControl=${conexion.escape(noControl)}`
+            `FROM Grupo ` +
+            `WHERE GrupoClave=${conexion.escape(grupoClave)}`
     )
 }
 
 exports.crear = json => conexion => {
     const {
+        grupoClave,
         noControl,
-        titulo,
-        nombre,
-        apellidoPaterno,
-        apellidoMaterno,
-        telefono,
-        correoElectronico
+        materiaClave,
+        semestre
     } = json
-    return validar(/[A-Za-z0-9 ]{0,50}/)(descripcion)
-        .then(_ => {
-            return conexion.query(
-                `INSERT INTO Docente(` +
-                    `DocenteNoControl, ` +
-                    `DocenteTitulo, ` +
-                    `DocenteNombre, ` +
-                    `DocenteApellidoPaterno, ` +
-                    `DocenteApellidoMaterno, ` +
-                    `DocenteTelefono, ` +
-                    `DocenteCorreoElectronico` +
-                    `) ` +
-                    `VALUES(` +
-                    `${conexion.escape(noControl)}, ` +
-                    `${conexion.escape(titulo)}, ` +
-                    `${conexion.escape(nombre)}, ` +
-                    `${conexion.escape(apellidoPaterno)}, ` +
-                    `${conexion.escape(apellidoMaterno)}, ` +
-                    `${conexion.escape(telefono)}, ` +
-                    `${conexion.escape(correoElectronico)} ` +
-                    `)`
-            )
-        })
-        .then(_ => {
-            return noControl
-        })
+    return conexion.query(
+        `INSERT INTO Materia(` +
+            `MateriaClave, ` +
+            `MateriaNombre, ` +
+            `MateriaNombreAbreviado`
+            `) ` +
+            `VALUES(` +
+            `${conexion.escape(materiaClave)}, ` +
+            `${conexion.escape(nombre)}, ` +
+            `${conexion.escape(nombreAbreviado)}` +
+            `)`
+    ).then(_ => {
+        return materiaClave
+    })
 }
-
 
 exports.modificar = json => conexion => {
     const {
-        noControl,
-        titulo,
+        materiaClave,
         nombre,
-        apellidoPaterno,
-        apellidoMaterno,
-        telefono,
-        correoElectronico
+        nombreAbreviado
     } = json
     return conexion.query(
-        `UPDATE Docente ` +
+        `UPDATE Materia ` +
             `SET ` +
-            `DocenteNoControl=${conexion.escape(noControl)}, ` +
-            `DocenteTitulo=${conexion.escape(titulo)}, ` +
-            `DocenteNombre=${conexion.escape(nombre)}, ` +
-            `DocenteApellidoPaterno=${conexion.escape(apellidoPaterno)}, ` +
-            `DocenteApellidoMaterno=${conexion.escape(apellidoMaterno)}, ` +
-            `DocenteTelefono=${conexion.escape(telefono)}, ` +
-            `DocenteCorreoElectronico=${conexion.escape(correoElectronico)} ` +
-            `WHERE DocenteNoControl=${conexion.escape(noControl)}`
+            `MateriaClave=${conexion.escape(materiaClave)}, ` +
+            `MateriaNombre=${conexion.escape(nombre)}, ` +
+            `MateriaNombreAbreviado=${conexion.escape(nombreAbreviado)} ` +
+            `WHERE MateriaClave=${conexion.escape(materiaClave)}`
     ).then(_ => {
         return noControl
     })
 }
 
 exports.borrar = json => conexion => {
-    const { noControl } = json
+    const { materiaClave } = json
     return conexion.query(
-        `DELETE FROM Docente ` +
-            `WHERE DocenteNoControl=${conexion.escape(noControl)}`
+        `DELETE FROM Materia ` +
+            `WHERE MateriaClave=${conexion.escape(materiaClave)}`
     ).then(resultado => {
         if (resultado.affectedRows > 0) {
-            return noControl
+            return materiaClave
         } else {
             throw Error('No se pudo eliminar')
         }

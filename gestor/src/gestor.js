@@ -55,7 +55,7 @@ app.delete(
 
 // REST API de los grupos de las materias y docentes.
 app.post(
-    '/docente/:noControl/materia/:materiaId/grupo/crear',
+    '/docente/:noControl/materia/:materiaClave/grupo/crear',
     (peticion, respuesta) =>
         bd.conectar()
         .then(grupo.crear(mergeJSON.merge(peticion.params, peticion.body)))
@@ -64,7 +64,7 @@ app.post(
 )
 
 app.put(
-    '/docente/:noControl/materia/:materiaId/grupo/:grupoId',
+    '/docente/:noControl/materia/:materiaClave/grupo/:grupoClave',
     (peticion, respuesta) =>
         bd.conectar()
         .then(grupo.modificar(mergeJSON.merge(peticion.params, peticion.body)))
@@ -73,7 +73,7 @@ app.put(
 )
 
 app.get(
-    '/docente/:noControl/materia/:materiaId/grupo/:grupoId',
+    '/docente/:noControl/materia/:materiaClave/grupo/:grupoClave',
     (peticion, respuesta) =>
         bd.conectar()
         .then(grupo.consultar(peticion.params))
@@ -82,7 +82,7 @@ app.get(
 )
 
 app.delete(
-    '/docente/:noControl/materia/:materiaId/grupo/:grupoId',
+    '/docente/:noControl/materia/:materiaClave/grupo/:grupoClave',
     (peticion, respuesta) =>
         bd.conectar()
         .then(grupo.borrar(peticion.params))
@@ -101,7 +101,7 @@ app.post(
 )
 
 app.get(
-    '/materia/:materiaId',
+    '/materia/:materiaClave',
     (peticion, respuesta) =>
         bd.conectar()
         .then(materia.consultar(peticion.params))
@@ -110,7 +110,7 @@ app.get(
 )
 
 app.delete(
-    '/materia/:materiaId',
+    '/materia/:materiaClave',
     (peticion, respuesta) =>
         bd.conectar()
         .then(materia.borrar(peticion.params))

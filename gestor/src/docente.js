@@ -17,32 +17,28 @@ exports.crear = json => conexion => {
         telefono,
         correoElectronico
     } = json
-    return validar(/[A-Za-z0-9 ]{0,50}/)(descripcion)
-        .then(_ => {
-            return conexion.query(
-                `INSERT INTO Docente(` +
-                    `DocenteNoControl, ` +
-                    `DocenteTitulo, ` +
-                    `DocenteNombre, ` +
-                    `DocenteApellidoPaterno, ` +
-                    `DocenteApellidoMaterno, ` +
-                    `DocenteTelefono, ` +
-                    `DocenteCorreoElectronico` +
-                    `) ` +
-                    `VALUES(` +
-                    `${conexion.escape(noControl)}, ` +
-                    `${conexion.escape(titulo)}, ` +
-                    `${conexion.escape(nombre)}, ` +
-                    `${conexion.escape(apellidoPaterno)}, ` +
-                    `${conexion.escape(apellidoMaterno)}, ` +
-                    `${conexion.escape(telefono)}, ` +
-                    `${conexion.escape(correoElectronico)} ` +
-                    `)`
-            )
-        })
-        .then(_ => {
-            return noControl
-        })
+    return conexion.query(
+        `INSERT INTO Docente(` +
+            `DocenteNoControl, ` +
+            `DocenteTitulo, ` +
+            `DocenteNombre, ` +
+            `DocenteApellidoPaterno, ` +
+            `DocenteApellidoMaterno, ` +
+            `DocenteTelefono, ` +
+            `DocenteCorreoElectronico` +
+            `) ` +
+            `VALUES(` +
+            `${conexion.escape(noControl)}, ` +
+            `${conexion.escape(titulo)}, ` +
+            `${conexion.escape(nombre)}, ` +
+            `${conexion.escape(apellidoPaterno)}, ` +
+            `${conexion.escape(apellidoMaterno)}, ` +
+            `${conexion.escape(telefono)}, ` +
+            `${conexion.escape(correoElectronico)} ` +
+            `)`
+    ).then(_ => {
+        return noControl
+    })
 }
 
 
