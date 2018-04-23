@@ -1,3 +1,5 @@
+const crypto = require('crypto')
+
 exports.consultar = json => conexion => {
     const { usuarioId } = json
     return conexion.query(
@@ -7,10 +9,12 @@ exports.consultar = json => conexion => {
     )
 }
 
-exports.crear = conexion => {
+exports.crear = json => conexion => {
+    const { usuarioClave } = json
+    const hash = crypto.createHmac('sha256', usuarioClave).digest('hex')
     return conexion.query(
-        `INSERT INTO Usuario(UsuarioFechaCreacion) ` +
-            `VALUES(NOW())`
+        `INSERT INTO Usuario(UsuarioClave, UsuarioFechaCreacion) ` +
+            `VALUES('${conexion.escape(hash)}', NOW())`
     ).then(resultado => {
         return resultado.insertId.toString()
     })

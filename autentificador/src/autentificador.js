@@ -21,7 +21,7 @@ app.post(
     '/usuario/crear',
     (peticion, respuesta) =>
         bd.conectar()
-        .then(usuario.crear)
+        .then(usuario.crear(peticion.body))
         .then(enviar(respuesta))
         .then(bd.terminar)
 )

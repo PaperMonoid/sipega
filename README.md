@@ -1,7 +1,7 @@
-![Logo SIPEGA](/imagenes/SIPEGA.png)
 ![Logo DATUM](/imagenes/DATUM.png)
 # Sistema de Planes de Estudio para Gestión Académica (SIPEGA)
 SIPEGA es un sistema de información diseñado para llevar a cabo procesos de gestión académica de una manera más eficiente y automatizada. Consta de diferentes componentes que se comunican entre sí por medio de un REST API escrito en javascript.
+![Logo SIPEGA](/imagenes/SIPEGA.png)
 
 ## Cómo empezar
 Clona el repositorio con el siguiente comando:
@@ -12,7 +12,7 @@ git clone https://github.com/TritiumMonoid/sipega.git
 Carga la base de datos de MySQL con el siguiente comando (por lo pronto solo se tiene el microservicio autentificador):
 ```shell
 # se dirige al directorio donde se encuentra la base de datos
-cd sipega/autentificador/bd/
+cd sipega/base_de_datos/
 
 # accede a mysql
 mysql -u root -p
@@ -55,7 +55,7 @@ echo %DB_PASSWORD%
 Instala las dependencias necesarias e inicia los microservicios (por lo pronto solo se tiene el microservicio autentificador):
 ```shell
 # se dirige al directorio del microservicio autentificador
-cd ../
+cd ../autentificador
 
 # instala las dependencias necesarias
 npm install .
@@ -73,20 +73,20 @@ Como se basa en un REST API se pueden hacer peticiones para manipular los datos.
 ### Autentificador
 ##### Usuario
 * POST http://localhost:3000/usuario/crear
-No toma argumentos y regresa el id del usuario si se inserta de forma exitosa.
+Toma como argumento el hash SHA-256 de la contraseña y regresa el id del usuario si se inserta de forma exitosa.
 * GET http://localhost:3000/usuario/$usuarioId
 Toma como argumento el id del usuario y regresa el registro en formato json.
 * DELETE http://localhost:3000/usuario/$usuarioId
 Toma como argumento el id del usuario y regresa el id del usuario si se borra de forma exitosa.
 ```shell
 # crea un usuario
-curl -X POST http://localhost:3000/usuario/crear
+curl -X POST http://localhost:3000/usuario/crear -d "clave=123456789"
 
 # consulta un usuario
-curl -X GET http://localhost:3000/usuario/1
+curl -X GET http://localhost:3000/usuario/2
 
 # borra un usuario
-curl -X DELETE http://localhost:3000/usuario/1
+curl -X DELETE http://localhost:3000/usuario/2
 ```
 
 #### Privilegio
@@ -101,10 +101,10 @@ Toma como argumento el id del privilegio y regresa el id del privilegio si se bo
 curl -X POST http://localhost:3000/privilegio/crear -d "descripcion=Prueba"
 
 # consulta un privilegio
-curl -X GET http://localhost:3000/privilegio/1
+curl -X GET http://localhost:3000/privilegio/2
 
 # borra un privilegio
-curl -X DELETE http://localhost:3000/privilegio/1
+curl -X DELETE http://localhost:3000/privilegio/2
 ```
 
 #### Acceso
@@ -114,8 +114,8 @@ Toma como argumentos el id del usuario, el id del privilegio, permiso de lectura
 Toma como argumentos el id del usuario, el id del privilegio y regresa el registro más nuevo que tiene en formato json.
 ```shell
 # crea un acceso
-curl -X POST http://localhost:3000/usuario/1/privilegio/1 -d "lectura=TRUE&escritura=FALSE&ejecucion=TRUE"
+curl -X POST http://localhost:3000/usuario/2/privilegio/2 -d "lectura=TRUE&escritura=FALSE&ejecucion=TRUE"
 
 # consulta un acceso
-curl -X GET http://localhost:3000/usuario/1/privilegio/1
+curl -X GET http://localhost:3000/usuario/2/privilegio/2
 ```
