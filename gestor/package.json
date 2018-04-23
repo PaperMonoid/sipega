@@ -1,0 +1,11 @@
+{
+  "name": "gestor",
+  "version": "0.0.1",
+  "description": "Gestiona los docentes sus evidencias",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.3",
+    "merge-json": "0.1.0-b.3",
+    "promise-mysql": "^3.2.1"
+  }
+}

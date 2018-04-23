@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.7.21, for Linux (x86_64)
+-- MySQL dump 10.16  Distrib 10.2.14-MariaDB, for Linux (x86_64)
 --
 -- Host: localhost    Database: Sipega
 -- ------------------------------------------------------
--- Server version	5.7.21-0ubuntu0.17.10.1
+-- Server version	10.2.14-MariaDB
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -133,7 +133,7 @@ CREATE TABLE `Usuario` (
   `UsuarioClave` char(64) NOT NULL,
   `UsuarioFechaCreacion` datetime NOT NULL,
   PRIMARY KEY (`UsuarioId`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -155,4 +155,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-04-22 17:43:13
+-- Dump completed on 2018-04-22 20:46:10

@@ -10,11 +10,11 @@ exports.consultar = json => conexion => {
 }
 
 exports.crear = json => conexion => {
-    const { usuarioClave } = json
-    const hash = crypto.createHmac('sha256', usuarioClave).digest('hex')
+    const { clave } = json
+    const hash = crypto.createHmac('sha256', clave).digest('hex')
     return conexion.query(
         `INSERT INTO Usuario(UsuarioClave, UsuarioFechaCreacion) ` +
-            `VALUES('${conexion.escape(hash)}', NOW())`
+            `VALUES(${conexion.escape(hash)}, NOW())`
     ).then(resultado => {
         return resultado.insertId.toString()
     })
