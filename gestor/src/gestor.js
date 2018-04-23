@@ -55,7 +55,7 @@ app.delete(
 
 // REST API de los grupos de las materias y docentes.
 app.post(
-    '/docente/:noControl/materia/:materiaClave/grupo/crear',
+    '/docente/:noControl/materia/:materiaClave/grupo/:grupoClave/crear',
     (peticion, respuesta) =>
         bd.conectar()
         .then(grupo.crear(mergeJSON.merge(peticion.params, peticion.body)))

@@ -16,14 +16,16 @@ exports.crear = json => conexion => {
     } = json
     return conexion.query(
         `INSERT INTO Materia(` +
-            `MateriaClave, ` +
-            `MateriaNombre, ` +
-            `MateriaNombreAbreviado`
+            `GrupoClave, ` +
+            `GrupoDocenteNoControl, ` +
+            `GrupoMateriaClave, ` +
+            `GrupoSemestre`
             `) ` +
             `VALUES(` +
+            `${conexion.escape(grupoClave)}, ` +
+            `${conexion.escape(noControl)}, ` +
             `${conexion.escape(materiaClave)}, ` +
-            `${conexion.escape(nombre)}, ` +
-            `${conexion.escape(nombreAbreviado)}` +
+            `${conexion.escape(semestre)}`
             `)`
     ).then(_ => {
         return materiaClave
@@ -32,30 +34,32 @@ exports.crear = json => conexion => {
 
 exports.modificar = json => conexion => {
     const {
+        grupoClave,
+        noControl,
         materiaClave,
-        nombre,
-        nombreAbreviado
+        semestre
     } = json
     return conexion.query(
-        `UPDATE Materia ` +
+        `UPDATE Grupo ` +
             `SET ` +
-            `MateriaClave=${conexion.escape(materiaClave)}, ` +
-            `MateriaNombre=${conexion.escape(nombre)}, ` +
-            `MateriaNombreAbreviado=${conexion.escape(nombreAbreviado)} ` +
-            `WHERE MateriaClave=${conexion.escape(materiaClave)}`
+            `GrupoClave=${conexion.escape(grupoClave)}, ` +
+            `GrupoDocenteNoControl=${conexion.escape(noControl)}, ` +
+            `GrupoMateriaClave=${conexion.escape(materiaClave)}, ` +
+            `GrupoSemestre=${conexion.escape(semestre)} ` +
+            `WHERE GrupoClave=${conexion.escape(grupoClave)}`
     ).then(_ => {
         return noControl
     })
 }
 
 exports.borrar = json => conexion => {
-    const { materiaClave } = json
+    const { grupoClave } = json
     return conexion.query(
-        `DELETE FROM Materia ` +
-            `WHERE MateriaClave=${conexion.escape(materiaClave)}`
+        `DELETE FROM Grupo ` +
+            `WHERE GrupoClave=${conexion.escape(grupoClave)}`
     ).then(resultado => {
         if (resultado.affectedRows > 0) {
-            return materiaClave
+            return grupoClave
         } else {
             throw Error('No se pudo eliminar')
         }
