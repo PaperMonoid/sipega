@@ -18,10 +18,10 @@ const enviar = respuesta => dato => respuesta.send(dato)
 
 // REST API del Docente.
 app.post(
-    '/docente/crear',
+    '/docente/:noControl',
     (peticion, respuesta) =>
         bd.conectar()
-        .then(docente.crear(peticion.body))
+        .then(docente.crear(mergeJSON.merge(peticion.params, peticion.body)))
         .then(enviar(respuesta))
         .then(bd.terminar)
 )
@@ -55,7 +55,7 @@ app.delete(
 
 // REST API de los grupos de las materias y docentes.
 app.post(
-    '/docente/:noControl/materia/:materiaClave/grupo/:grupoClave/crear',
+    '/docente/:noControl/materia/:materiaClave/grupo/:grupoClave',
     (peticion, respuesta) =>
         bd.conectar()
         .then(grupo.crear(mergeJSON.merge(peticion.params, peticion.body)))
@@ -92,10 +92,19 @@ app.delete(
 
 // REST API de los materia.
 app.post(
-    '/materia/crear',
+    '/materia/:materiaClave',
     (peticion, respuesta) =>
         bd.conectar()
-        .then(materia.crear(peticion.body))
+        .then(materia.crear(mergeJSON.merge(peticion.params, peticion.body)))
+        .then(enviar(respuesta))
+        .then(bd.terminar)
+)
+
+app.put(
+    '/materia/:materiaClave',
+    (peticion, respuesta) =>
+        bd.conectar()
+        .then(materia.modificar(mergeJSON.merge(peticion.params, peticion.body)))
         .then(enviar(respuesta))
         .then(bd.terminar)
 )
@@ -121,5 +130,5 @@ app.delete(
 app.listen(
     3000,
     () =>
-        console.log('Autentificador escuchando en el puerto 3000...')
+        console.log('Gestor escuchando en el puerto 3000...')
 )

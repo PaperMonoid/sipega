@@ -17,7 +17,7 @@ exports.crear = json => conexion => {
         `INSERT INTO Materia(` +
             `MateriaClave, ` +
             `MateriaNombre, ` +
-            `MateriaNombreAbreviado`
+            `MateriaNombreAbreviado` +
             `) ` +
             `VALUES(` +
             `${conexion.escape(materiaClave)}, ` +
@@ -43,7 +43,7 @@ exports.modificar = json => conexion => {
             `MateriaNombreAbreviado=${conexion.escape(nombreAbreviado)} ` +
             `WHERE MateriaClave=${conexion.escape(materiaClave)}`
     ).then(_ => {
-        return noControl
+        return materiaClave
     })
 }
 

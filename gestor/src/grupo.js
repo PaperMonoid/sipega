@@ -15,17 +15,17 @@ exports.crear = json => conexion => {
         semestre
     } = json
     return conexion.query(
-        `INSERT INTO Materia(` +
+        `INSERT INTO Grupo(` +
             `GrupoClave, ` +
             `GrupoDocenteNoControl, ` +
             `GrupoMateriaClave, ` +
-            `GrupoSemestre`
+            `GrupoSemestre` +
             `) ` +
             `VALUES(` +
             `${conexion.escape(grupoClave)}, ` +
             `${conexion.escape(noControl)}, ` +
             `${conexion.escape(materiaClave)}, ` +
-            `${conexion.escape(semestre)}`
+            `${conexion.escape(semestre)}` +
             `)`
     ).then(_ => {
         return materiaClave

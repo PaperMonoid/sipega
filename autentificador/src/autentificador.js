@@ -18,7 +18,7 @@ const enviar = respuesta => dato => respuesta.send(dato)
 
 // REST API del Usuario.
 app.post(
-    '/usuario/crear',
+    '/usuario',
     (peticion, respuesta) =>
         bd.conectar()
         .then(usuario.crear(peticion.body))
@@ -65,7 +65,7 @@ app.get(
 
 // REST API de los privilegios.
 app.post(
-    '/privilegio/crear',
+    '/privilegio',
     (peticion, respuesta) =>
         bd.conectar()
         .then(privilegio.crear(peticion.body))

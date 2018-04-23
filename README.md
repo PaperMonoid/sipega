@@ -72,7 +72,7 @@ Como se basa en un REST API se pueden hacer peticiones para manipular los datos.
 
 ### Autentificador
 ##### Usuario
-* POST http://localhost:3000/usuario/crear
+* POST http://localhost:3000/usuario
 Toma como argumento el hash SHA-256 de la contraseña y regresa el id del usuario si se inserta de forma exitosa.
 * GET http://localhost:3000/usuario/$usuarioId
 Toma como argumento el id del usuario y regresa el registro en formato json.
@@ -80,7 +80,7 @@ Toma como argumento el id del usuario y regresa el registro en formato json.
 Toma como argumento el id del usuario y regresa el id del usuario si se borra de forma exitosa.
 ```shell
 # crea un usuario
-curl -X POST http://localhost:3000/usuario/crear -d "clave=123456789"
+curl -X POST http://localhost:3000/usuario -d "clave=123456789"
 
 # consulta un usuario
 curl -X GET http://localhost:3000/usuario/2
@@ -90,7 +90,7 @@ curl -X DELETE http://localhost:3000/usuario/2
 ```
 
 #### Privilegio
-* POST http://localhost:3000/privilegio/crear
+* POST http://localhost:3000/privilegio
 Toma como argumento la descripcion del privilegio y regresa el id del privilegio si se inserta de forma exitosa.
 * GET http://localhost:3000/privilegio/$privilegioId
 Toma como argumento el id del privilegio y regresa el registro en formato json.
@@ -98,7 +98,7 @@ Toma como argumento el id del privilegio y regresa el registro en formato json.
 Toma como argumento el id del privilegio y regresa el id del privilegio si se borra de forma exitosa.
 ```shell
 # crea un privilegio
-curl -X POST http://localhost:3000/privilegio/crear -d "descripcion=Prueba"
+curl -X POST http://localhost:3000/privilegio -d "descripcion=Prueba"
 
 # consulta un privilegio
 curl -X GET http://localhost:3000/privilegio/2
