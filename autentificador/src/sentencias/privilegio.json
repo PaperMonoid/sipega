@@ -1,0 +1,40 @@
+{
+
+    "crear" : {
+        "parametros" : ["privilegioId"],
+        "sentencia" : "SELECT  FROM Privilegio WHERE PrivilegioId = ?",
+        "resultado" : {
+            "privilegioId" : "insertId"
+        }
+    },
+    "crear" : {
+        "parametros" : ["usuarioClave"],
+        "sentencia" : "INSERT INTO Usuario(UsuarioClave, UsuarioFechaCreacion) VALUES(?, NOW())",
+        "resultado": {
+            "usuarioId": "insertId"
+        }
+    },
+    "consultar" : {
+        "parametros" : ["usuarioId"],
+        "sentencia" : "SELECT UsuarioId, UsuarioClave, UsuarioFechaCreacion FROM Usuario WHERE UsuarioId = ?",
+        "resultado": {
+            "usuarioId" : "UsuarioId",
+            "usuarioClave" : "UsuarioClave",
+            "usuarioFechaCreacion" : "UsuarioFechaCreacion"
+        }
+    },
+    "borrar": {
+        "parametros" : ["usuarioId"],
+        "sentencia" : "DELETE FROM Usuario WHERE UsuarioId = ?",
+        "resultado": {
+            "usuarioBorrado" : "affectedRows"
+        }
+    },
+    "modificar": {
+        "parametros" : ["usuarioId", "usuarioClave"],
+        "sentencia" : "UPDATE Usuario UsuarioClave = ? WHERE UsuarioId = ?",
+        "resultado": {
+            "usuarioModificado" : "affectedRows"
+        }
+    }
+}

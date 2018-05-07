@@ -1,46 +1,31 @@
 const crypto = require('crypto');
-
-const bd = require("./bd.js");
-const importarConsultas = bd.importarConsultas;
-const usuario = importarConsultas('./usuario.json');
-
 const express = require('express');
 const router = express.Router();
 
+const { procesar } = require("./utils.js");
+const { importarConsultas } = require("./bd.js");
+
 const cifrar = texto => crypto.createHmac("sha256", texto).digest("hex");
-const enviar = respuesta => dato => respuesta.send(dato);
+const crearUsuario = json => {
+    json["usuarioClave"] = cifrar(json["usuarioClave"]);
+    return usuario.crear(json);
+};
+
+const usuario = importarConsultas('./sentencias/usuario.json');
+
+router.post(
+    "/",
+    procesar(crearUsuario)
+);
 
 router.get(
     "/:usuarioId",
-    (peticion, respuesta) =>{
-        return bd.conectar()
-            .then(usuario.consultar(peticion.params))
-            .then(enviar(respuesta))
-            .then(bd.terminar)
-    }
+    procesar(usuario.consultar)
 );
 
 router.delete(
     "/:usuarioId",
-    (peticion, respuesta) =>
-        bd.conectar()
-        .then(usuario.borrar(peticion.body))
-        .then(enviar(respuesta))
-        .then(bd.terminar)
-);
-
-const crearUsuario = json => {
-    json["usuarioClave"] = cifrar(json["usuarioClave"]);
-    return usuario.crear(json);
-}
-
-router.post(
-    "/",
-    (peticion, respuesta) =>
-        bd.conectar()
-        .then(crearUsuario(peticion.body))
-        .then(enviar(respuesta))
-        .then(bd.terminar)
+    procesar(usuario.borrar)
 );
 
 module.exports = router;

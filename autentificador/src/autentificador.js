@@ -2,8 +2,7 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const app = express()
 
-const mergeJSON = require('merge-json')
-
+const mergeJSON = require('merge-json');
 const bd = require('./bd.js')
 const usuario = require('./usuario.js')
 const privilegio = require('./privilegio.js')
