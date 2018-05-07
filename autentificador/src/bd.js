@@ -9,7 +9,7 @@ exports.conectar = () => mysql.createConnection({
 
 exports.terminar = conexion => Promise.resolve(conexion => conexion.end())
 
-exports.analizar = datos => json => conexion =>
+const analizar = datos => json => conexion =>
       conexion.query(
           datos["sentencia"],
           datos["parametros"].map(llave => json[llave])
@@ -31,3 +31,12 @@ exports.analizar = datos => json => conexion =>
               return [respuesta];
           }
       });
+
+exports.importarConsultas = path => {
+    const datos = require(path);
+    const objeto = {};
+    for (let llave in datos) {
+        objeto[llave] = analizar(datos[llave]);
+    }
+    return objeto;
+}

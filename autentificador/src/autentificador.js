@@ -14,35 +14,10 @@ app.use(bodyParser.urlencoded({
     extended: true
 }))
 
-const enviar = respuesta => dato => respuesta.send(dato)
+const enviar = respuesta => dato => respuesta.send(dato);
 
-// REST API del Usuario.
-app.post(
-    '/usuario',
-    (peticion, respuesta) =>
-        bd.conectar()
-        .then(usuario.crear(peticion.body))
-        .then(enviar(respuesta))
-        .then(bd.terminar)
-)
-
-app.get(
-    '/usuario/:usuarioId',
-    (peticion, respuesta) =>
-        bd.conectar()
-        .then(usuario.consultar(peticion.params))
-        .then(enviar(respuesta))
-        .then(bd.terminar)
-)
-
-app.delete(
-    '/usuario/:usuarioId',
-    (peticion, respuesta) =>
-        bd.conectar()
-        .then(usuario.borrar(peticion.params))
-        .then(enviar(respuesta))
-        .then(bd.terminar)
-)
+// REST API del usuario
+app.use("/usuario/", usuario);
 
 // REST API de los privilegios de los usuarios.
 app.post(
