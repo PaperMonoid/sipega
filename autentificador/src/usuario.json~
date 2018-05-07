@@ -1,0 +1,27 @@
+{
+    "/usuario/:usuarioId" : {
+        "post" : {
+            "parametros" : ["usuarioId", "usuarioClave"],
+            "sentencia" : "INSERT INTO Usuario(UsuarioId, UsuarioClave, UsuarioFechaCreacion) VALUES(?, ?, NOW())",
+            "resultado": {
+                "usuarioId": "resultadoId"
+            }
+        },
+        "get" : {
+            "parametros" : ["usuarioId"],
+            "sentencia" : "SELECT UsuarioId, UsuarioClave, UsuarioFechaCreacion FROM Usuario WHERE UsuarioId = ?",
+            "resultado": {
+                "usuarioId" : "UsuarioId",
+                "usuarioClave" : "UsuarioClave",
+                "usuarioFechaCreacion" : "UsuarioFechaCreacion"
+            }
+        },
+        "delete": {
+            "parametros" : ["usuarioId"],
+            "sentencia" : "DELETE FROM Usuario WHERE UsuarioId = ?",
+            "resultado": {
+                "usuarioId" : "UsuarioId"
+            }
+        }
+    }
+}
