@@ -1,13 +1,14 @@
-const mysql = require('promise-mysql')
+const mergeJSON = require('merge-json');
+const mysql = require('promise-mysql');
 
 exports.conectar = () => mysql.createConnection({
     host: 'localhost',
     user: 'root',
     password: process.env.DB_PASSWORD,
     database: 'Sipega'
-})
+});
 
-exports.terminar = conexion => Promise.resolve(conexion => conexion.end())
+exports.terminar = conexion => Promise.resolve(conexion => conexion.end());
 
 const analizar = datos => json => conexion =>
       conexion.query(
@@ -32,11 +33,29 @@ const analizar = datos => json => conexion =>
           }
       });
 
-exports.importarConsultas = path => {
-    const datos = require(path);
+exports.analizarConsultas = datos => {
     const objeto = {};
-    for (let llave in datos) {
-        objeto[llave] = analizar(datos[llave]);
+    for (let ruta in datos) {
+        objeto[ruta] = {};
+        for (let metodo in datos[ruta]) {
+            objeto[ruta][metodo] = analizar(datos[ruta][metodo]);
+        }
     }
     return objeto;
-}
+};
+
+const enviar = respuesta => dato => respuesta.send(dato);
+
+const procesar = sentencia => (peticion, respuesta) =>
+      exports.conectar()
+      .then(sentencia(mergeJSON.merge(peticion.params, peticion.body)))
+      .then(enviar(respuesta))
+      .then(exports.terminar);
+
+exports.restificarConsultas = datos => router => {
+    for (let ruta in datos) {
+        for (let metodo in datos[ruta]) {
+            router[metodo](ruta, procesar(datos[ruta][metodo]));
+        }
+    }
+};

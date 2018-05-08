@@ -1,22 +1,37 @@
-const express = require('express')
-const bodyParser = require('body-parser')
-const app = express()
+const express = require('express');
+const bodyParser = require('body-parser');
+const app = express();
+const router = express.Router();
 
+const R = require("ramda");
 const mergeJSON = require('merge-json');
-const bd = require('./bd.js')
-const usuario = require('./usuario.js')
-const privilegio = require('./privilegio.js')
-const acceso = require('./acceso.js')
+const bd = require('./bd.js');
+const { analizarConsultas, restificarConsultas } = require("./bd.js");
+const privilegio = require('./privilegio.js');
+const acceso = require('./acceso.js');
+const crypto = require('crypto');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: true
-}))
+}));
 
 const enviar = respuesta => dato => respuesta.send(dato);
 
 // REST API del usuario
-app.use("/usuario/", usuario);
+const usuarioJson = require("./usuario.json");
+const usuario = analizarConsultas(usuarioJson);
+const cifrar = texto => crypto.createHmac("sha256", texto).digest("hex");
+
+usuario["/usuario"]["post"] = R.compose(
+    usuario["/usuario"]["post"],
+    json => {
+        json["usuarioClave"] = cifrar(json["usuarioClave"]);
+        return json;
+    }
+);
+
+restificarConsultas(usuario)(router);
 
 // REST API de los privilegios de los usuarios.
 app.post(
@@ -65,6 +80,8 @@ app.delete(
         .then(bd.terminar)
 )
 
+
+app.use("/", router);
 app.listen(
     3001,
     () =>
