@@ -1,0 +1,45 @@
+{
+    "/usuario": {
+        "post": {
+            "parametros": [
+                "usuarioClave"
+            ],
+            "sentencia": "INSERT INTO Usuario(UsuarioClave, UsuarioFechaCreacion) VALUES(?, NOW())",
+            "resultado": {
+                "usuarioId": "insertId"
+            }
+        }
+    },
+    "/usuario/:usuarioId": {
+        "get": {
+            "parametros": [
+                "usuarioId"
+            ],
+            "sentencia": "SELECT UsuarioId, UsuarioClave, UsuarioFechaCreacion FROM Usuario WHERE UsuarioId = ?",
+            "resultado": {
+                "usuarioId": "UsuarioId",
+                "usuarioClave": "UsuarioClave",
+                "usuarioFechaCreacion": "UsuarioFechaCreacion"
+            }
+        },
+        "delete": {
+            "parametros": [
+                "usuarioId"
+            ],
+            "sentencia": "DELETE FROM Usuario WHERE UsuarioId = ?",
+            "resultado": {
+                "usuarioBorrado": "affectedRows"
+            }
+        },
+        "put": {
+            "parametros": [
+                "usuarioId",
+                "usuarioClave"
+            ],
+            "sentencia": "UPDATE Usuario UsuarioClave = ? WHERE UsuarioId = ?",
+            "resultado": {
+                "usuarioModificado": "affectedRows"
+            }
+        }
+    }
+}
