@@ -7,8 +7,6 @@ const R = require("ramda");
 const mergeJSON = require('merge-json');
 const bd = require('./bd.js');
 const { analizarConsultas, restificarConsultas } = require("./bd.js");
-const privilegio = require('./privilegio.js');
-const acceso = require('./acceso.js');
 const crypto = require('crypto');
 
 app.use(bodyParser.json());
@@ -22,7 +20,6 @@ const enviar = respuesta => dato => respuesta.send(dato);
 const usuarioJson = require("./usuario.json");
 const usuario = analizarConsultas(usuarioJson);
 const cifrar = texto => crypto.createHmac("sha256", texto).digest("hex");
-
 usuario["/usuario"]["post"] = R.compose(
     usuario["/usuario"]["post"],
     json => {
@@ -30,11 +27,21 @@ usuario["/usuario"]["post"] = R.compose(
         return json;
     }
 );
-
 restificarConsultas(usuario)(router);
 
+// REST API de los privilegios.
+const privilegioJson = require('./privilegio.json');
+const privilegio = analizarConsultas(privilegioJson);
+restificarConsultas(privilegio)(router);
+
 // REST API de los privilegios de los usuarios.
-app.post(
+const accesoJson = require('./acceso.json');
+const acceso = analizarConsultas(accesoJson);
+restificarConsultas(acceso)(router);
+console.log(acceso)
+
+// REST API de los privilegios de los usuarios.
+/*app.post(
     '/usuario/:usuarioId/privilegio/:privilegioId',
     (peticion, respuesta) =>
         bd.conectar()
@@ -50,36 +57,7 @@ app.get(
         .then(acceso.consultar(peticion.params))
         .then(enviar(respuesta))
         .then(bd.terminar)
-)
-
-// REST API de los privilegios.
-app.post(
-    '/privilegio',
-    (peticion, respuesta) =>
-        bd.conectar()
-        .then(privilegio.crear(peticion.body))
-        .then(enviar(respuesta))
-        .then(bd.terminar)
-)
-
-app.get(
-    '/privilegio/:privilegioId',
-    (peticion, respuesta) =>
-        bd.conectar()
-        .then(privilegio.consultar(peticion.params))
-        .then(enviar(respuesta))
-        .then(bd.terminar)
-)
-
-app.delete(
-    '/privilegio/:privilegioId',
-    (peticion, respuesta) =>
-        bd.conectar()
-        .then(privilegio.borrar(peticion.params))
-        .then(enviar(respuesta))
-        .then(bd.terminar)
-)
-
+)*/
 
 app.use("/", router);
 app.listen(

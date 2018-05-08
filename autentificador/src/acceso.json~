@@ -1,0 +1,34 @@
+{
+    "/usuario/:usuarioId/privilegio/:privilegioId" : {
+        "post": {
+            "parametros": [
+                "usuarioId",
+                "privilegioId",
+                "lectura",
+                "escritura",
+                "ejecucion"
+            ],
+            "sentencia": "INSERT INTO Acceso(AccesoUsuarioId, AccesoPrivilegioId, AccesoLectura, AccesoEscritura, AccesoEjecucion, AccesoFechaCreacion) VALUES(?, ?, ?, ?, ?, NOW())",
+            "resultado": {
+                "accesoId": "insertId"
+            }
+        },
+        "get": {
+            "parametros": [
+                "accesoId",
+                "usuarioId",
+                "privilegioId"
+            ],
+            "sentencia": "SELECT AccesoId, AccesoUsuarioId, AccesoPrivilegioId, AccesoLectura, AccesoEscritura, AccesoEjecucion, AccesoFechaCreacion FROM Acceso WHERE AccesoId = ? AND AccesoUsuarioId = ? AND AccesoPrivilegioId = ?",
+            "resultado": {
+                "accesoId": "AccesoId",
+                "usuarioId": "AccesoUsuarioId",
+                "privilegioId": "AccesoPrivilegioId",
+                "lectura": "AccesoLectura",
+                "escritura": "AccesoEscritura",
+                "ejecucion": "AccesoEjecucion",
+                "fechaCreacion": "AccesoFechaCreacion"
+            }
+        }
+    }
+}

@@ -33,10 +33,10 @@
         },
         "put": {
             "parametros": [
-                "usuarioId",
-                "usuarioClave"
+                "usuarioClave",
+                "usuarioId"
             ],
-            "sentencia": "UPDATE Usuario UsuarioClave = ? WHERE UsuarioId = ?",
+            "sentencia": "UPDATE Usuario SET UsuarioClave = ? WHERE UsuarioId = ?",
             "resultado": {
                 "usuarioModificado": "affectedRows"
             }
