@@ -1,0 +1,16 @@
+{
+    "lectura": {
+        "privilegioId": 1,
+        "lectura": true
+    },
+    "escritura": {
+        "privilegioId": 1,
+        "escritura": true
+    },
+    "ejecucion": {
+        "privilegioId": 1,
+        "ejecucion": true
+    },
+    "ninguno": {
+    }
+}

@@ -12,7 +12,7 @@ const obtener = parametros => ({
     "token": sign(
         {
             "id": parametros["id"],
-            "exp": enCincoMinutos()
+            "exp": enUnaHora()
         },
         process.env.SECRETO_SIPEGA
     )
