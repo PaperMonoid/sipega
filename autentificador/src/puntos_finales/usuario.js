@@ -6,6 +6,6 @@ const privilegios = require("./privilegios.json");
 
 router.get("/:id", ejecutar(buscar, privilegios.lectura));
 router.get("/", ejecutar(buscarTodos, privilegios.lectura));
-router.post("/", ejecutar(crear, privilegios.escritura));
+router.post("/", ejecutar(crear, privilegios.ninguno));
 
 module.exports = router;

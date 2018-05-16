@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { Navbar, NavbarBrand, Button } from "reactstrap";
+import { Link } from "react-router-dom";
 
 class Titulo extends Component {
     constructor(props) {
@@ -9,11 +11,13 @@ class Titulo extends Component {
     }
     render() {
         return(
-            <div class="navbar navbar-expand-lg navbar-light bg-light">
-              <div class="navbar-brand">
-                {this.props.texto}
-              </div>
-            </div>
+            <Navbar fixed="top" color="light">
+              <Link to="/">
+                <NavbarBrand>
+                  {this.props.texto}
+                </NavbarBrand>
+              </Link>
+            </Navbar>
         );
     }
 }

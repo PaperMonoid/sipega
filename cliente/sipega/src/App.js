@@ -1,12 +1,29 @@
 import React, { Component } from 'react';
-import { Registro, InicioSesion } from './componentes/sesion.js';
+import Titulo from "./componentes/titulo.js";
+import Panel from "./componentes/panel.js";
+import Registro from "./componentes/registro.js";
+import InicioSesion from "./componentes/iniciosesion.js";
+import {
+    BrowserRouter as Router,
+    Route,
+    Link,
+    Switch
+} from "react-router-dom";
 
 class App extends Component {
+
     render() {
         return (
-            <Registro/>
+            <Router>
+              <Switch>
+                <Route exact path="/" component={Panel} />
+                <Route path="/inicio-sesion" component={InicioSesion} />
+                <Route path="/registro" component={Registro} />
+              </Switch>
+            </Router>
         );
     }
+
 }
 
 /*
