@@ -1,16 +1,27 @@
-import React, { Component } from 'react';
-import { Progress, Alert, Container, Form, FormGroup, Button, Input, Label } from "reactstrap";
+import React, { Component } from "react";
+import {
+    Dialog,
+    Snackbar,
+    Paper,
+    TextField,
+    FlatButton,
+    RaisedButton
+} from 'material-ui';
 import { Link } from "react-router-dom";
 import Sesion from "./sesion.js";
 import Plantilla from "./plantilla.js";
 
-function actualizarEntrada(objeto) {
-    return propiedad => e => {
-        const estado = {};
-        estado[propiedad] = e.target.value;
-        objeto.setState(estado);
-    };
-}
+const estilos = {
+    contenedor: {
+        margin: 'auto',
+        marginTop: 30,
+        padding: 30,
+        width: 400
+    },
+    alineado_derecha: {
+        float: 'right'
+    }
+};
 
 class InicioSesion extends Component {
     constructor(props) {
@@ -18,51 +29,61 @@ class InicioSesion extends Component {
         this.state = {
             id: '',
             clave: '',
-            mostrarAlerta: false
+            mostrarDialogo: false
         };
-        this.actualizarEntrada = actualizarEntrada(this);
     }
 
     render() {
         return(
             <Plantilla>
-              <Container
-                className="border"
-                style={{padding: "30px", width: "400px"}}>
-                <Form onSubmit={e => this.iniciarSesion(e)}>
+              <Paper style={estilos.contenedor}>
+                <form onSubmit={e => this.iniciarSesion(e)}>
                   <h1> Inicio de sesión </h1>
-                  <FormGroup>
-                    <Label>ID de usuario</Label>
-                    <Input autoFocus type="text" placeholder="ID de usuario"
-                           value={this.state.id}
-                           onChange={this.actualizarEntrada("id")}/>
-                  </FormGroup>
-                  <FormGroup>
-                    <Label>Contraseña</Label>
-                    <Input type="password" placeholder="Contraseña"
-                           value={this.state.clave}
-                           onChange={this.actualizarEntrada("clave")}/>
-                  </FormGroup>
-                  <Button className="float-right" color="primary">SIGUIENTE</Button>
-                </Form>
-                <Link to="/registro">
-                  <Button className="float-left" color="link">
-                    Nuevo usuario
-                  </Button>
-                </Link>
-                <br/><br/>
-                {
-                    this.state.mostrarAlerta
-                        ? (
-                            <Alert color="danger">
-                              No existe un usuario con esa contraseña.
-                            </Alert>
-                        )
-                        : null
-                }
-            </Container>
-                </Plantilla>
+                  <TextField
+                    floatingLabelText="ID de usuario"
+                    hintText="ID de usuario"
+                    fullWidth={true}
+                    value={this.state.id}
+                    onChange={this.actualizarEntrada("id")}
+                    autoFocus={true}
+                    />
+                  <TextField
+                    floatingLabelText="Contraseña"
+                    hintText="Contraseña"
+                    type="password"
+                    fullWidth={true}
+                    value={this.state.clave}
+                    onChange={this.actualizarEntrada("clave")}
+                    />
+                  <br/><br/>
+                  <Link to="/registro">
+                    <FlatButton label="Nuevo usuario" primary={true} />
+                  </Link>
+                  <RaisedButton label="Siguiente" type="submit" primary={true} style={estilos.alineado_derecha}/>
+                </form>
+                <Dialog
+                  actions={<FlatButton label="Aceptar" onClick={this.cerrarDialogo}/>}
+                  modal={false}
+                  open={this.state.mostrarDialogo}
+                  onRequestClose={this.cerrarDialogo}
+                  >
+                  "No existe un usuario con esa contraseña."
+                </Dialog>
+            </Paper>
+            </Plantilla>
         );
+    }
+
+    cerrarDialogo = click => {
+        this.setState({
+            mostrarDialogo: false
+        });
+    };
+
+    actualizarEntrada = llave => evento => {
+        const estado = {};
+        estado[llave] = evento.target.value;
+        this.setState(estado);
     }
 
     iniciarSesion(e) {
@@ -73,7 +94,7 @@ class InicioSesion extends Component {
             })
             .catch(_ => {
                 this.setState({
-                    "mostrarAlerta": true
+                    mostrarDialogo: true
                 });
             });
     }

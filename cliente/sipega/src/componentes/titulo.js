@@ -1,23 +1,21 @@
 import React, { Component } from 'react';
-import { Navbar, NavbarBrand, Button } from "reactstrap";
 import { Link } from "react-router-dom";
+import { AppBar } from 'material-ui';
 
 class Titulo extends Component {
+
     constructor(props) {
         super(props);
         this.state = {
             texto: props.texto
         };
     }
+
     render() {
         return(
-            <Navbar fixed="top" color="light">
-              <Link to="/">
-                <NavbarBrand>
-                  {this.props.texto}
-                </NavbarBrand>
-              </Link>
-            </Navbar>
+              <AppBar
+                title={this.props.texto}
+                />
         );
     }
 }

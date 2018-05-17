@@ -3,6 +3,7 @@ import Titulo from "./componentes/titulo.js";
 import Panel from "./componentes/panel.js";
 import Registro from "./componentes/registro.js";
 import InicioSesion from "./componentes/iniciosesion.js";
+import Docentes from "./componentes/docentes.js";
 import {
     BrowserRouter as Router,
     Route,
@@ -17,6 +18,7 @@ class App extends Component {
             <Router>
               <Switch>
                 <Route exact path="/" component={Panel} />
+                <Route path="/docentes" component={Docentes} />
                 <Route path="/inicio-sesion" component={InicioSesion} />
                 <Route path="/registro" component={Registro} />
               </Switch>

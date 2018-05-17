@@ -1,7 +1,20 @@
 import React, { Component } from 'react';
 import { Redirect } from "react-router-dom";
-import { Progress } from "reactstrap";
+import { RefreshIndicator } from 'material-ui';
 import Sesion from "./sesion";
+
+const estilos = {
+    contenedor: {
+        display: 'inline-block',
+        position: 'fixed',
+        left: '50%',
+        top: '50%'
+    },
+    cargador: {
+        display: 'inline-block',
+        position: 'relative'
+    }
+};
 
 class ComprobanteSesion extends Component {
 
@@ -29,9 +42,15 @@ class ComprobanteSesion extends Component {
     render() {
         if (this.state.sesion == Sesion.Carga) {
             return (
-                <Progress value="100" animated color="primary">
-                  Cargando sesión...
-                </Progress>
+                <div style={estilos.contenedor}>
+                  <RefreshIndicator
+                    size={300}
+                    left={-150}
+                    top={-150}
+                    status="loading"
+                    style={estilos.refresh}
+                    />
+                </div>
             );
         } else if (this.state.sesion == Sesion.Activa) {
             return this.props.children ? this.props.children : null;

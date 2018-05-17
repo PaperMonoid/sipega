@@ -1,17 +1,28 @@
 import React, { Component } from "react";
-import { Progress, Alert, Container, Form, FormGroup, Button, Input, Label } from "reactstrap";
+import {
+    Dialog,
+    Snackbar,
+    Paper,
+    TextField,
+    FlatButton,
+    RaisedButton
+} from 'material-ui';
 import { Redirect, Link } from "react-router-dom";
 import { httpPost } from '../xmlhttp.js';
 import Sesion from "./sesion.js";
 import Plantilla from "./plantilla.js";
 
-function actualizarEntrada(objeto) {
-    return propiedad => e => {
-        const estado = {};
-        estado[propiedad] = e.target.value;
-        objeto.setState(estado);
-    };
-}
+const estilos = {
+    contenedor: {
+        margin: 'auto',
+        marginTop: 30,
+        padding: 30,
+        width: 400
+    },
+    alineado_derecha: {
+        float: 'right'
+    }
+};
 
 class Registro extends Component {
     constructor(props) {
@@ -19,48 +30,57 @@ class Registro extends Component {
         this.state = {
             id: '',
             clave: '',
-            mostrarAlerta: false
+            mostrarDialogo: false
         };
-        this.actualizarEntrada = actualizarEntrada(this);
     }
 
     render() {
         return(
             <Plantilla>
-              <Container
-                className="border"
-                style={{padding: "30px", width: "400px"}}>
-                <Form onSubmit={e => this.registrar(e)}>
+              <Paper style={estilos.contenedor}>
+                <form onSubmit={e => this.registrar(e)}>
                   <h1> Registro </h1>
-                  <FormGroup>
-                    <Label>Contraseña</Label>
-                    <Input type="password" placeholder="Contraseña"
-                           value={this.state.clave}
-                           onChange={this.actualizarEntrada("clave")}/>
-                    <small className="form-text text-muted">
-                      El usuario será asignado automáticamente.
-                    </small>
-                  </FormGroup>
-                  <Button className="float-right" color="primary">SIGUIENTE</Button>
-                </Form>
-                <Link to="/inicio-sesion">
-                  <Button className="float-left" color="link">
-                    Iniciar sesión
-                  </Button>
-                </Link>
-                <br/><br/>
-                {
-                    this.state.mostrarAlerta
-                        ? (
-                            <Alert color="danger">
-                              No se pudo crear el usuario.
-                            </Alert>
-                        )
-                        : null
-                }
-            </Container>
-                </Plantilla>
+                  <TextField
+                    floatingLabelText="Contraseña"
+                    hintText="Contraseña"
+                    type="password"
+                    fullWidth={true}
+                    value={this.state.clave}
+                    onChange={this.actualizarEntrada("clave")}
+                    autoFocus={true}
+                    />
+                  <small>
+                    El usuario será asignado automáticamente.
+                  </small>
+                  <br/><br/>
+                  <Link to="/inicio-sesion">
+                    <FlatButton label="Iniciar sesión" primary={true} />
+                  </Link>
+                  <RaisedButton label="Siguiente" type="submit" primary={true} style={estilos.alineado_derecha} />
+                </form>
+                <Dialog
+                  actions={<FlatButton label="Aceptar" onClick={this.cerrarDialogo}/>}
+                  modal={false}
+                  open={this.state.mostrarDialogo}
+                  onRequestClose={this.cerrarDialogo}
+                  >
+                  "El usuario no se pudo registrar."
+                </Dialog>
+              </Paper>
+            </Plantilla>
         );
+    }
+
+    cerrarDialogo = click => {
+        this.setState({
+            mostrarDialogo: false
+        });
+    };
+
+    actualizarEntrada = llave => evento => {
+        const estado = {};
+        estado[llave] = evento.target.value;
+        this.setState(estado);
     }
 
     registrar(e) {
@@ -76,7 +96,7 @@ class Registro extends Component {
             .catch(error => {
                 console.log(error);
                 this.setState({
-                    "mostrarAlerta": true
+                    "mostrarDialogo": true
                 });
             });
     }
