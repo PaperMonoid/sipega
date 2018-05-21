@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import { AppBar } from 'material-ui';
+import Logo from "../imagenes/logo.png";
 
 class Titulo extends Component {
 
@@ -13,9 +14,9 @@ class Titulo extends Component {
 
     render() {
         return(
-              <AppBar
-                title={this.props.texto}
-                />
+            <AppBar
+              title={<img src={Logo} alt={this.state.texto} height="100%"/>}
+              />
         );
     }
 }

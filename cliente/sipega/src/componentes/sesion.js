@@ -3,6 +3,10 @@ import { httpGet, httpPost } from '../xmlhttp.js';
 
 class Sesion {
 
+    static tokenCrudo() {
+        return Promise.resolve(localStorage.getItem("token"));
+    }
+
     static token() {
         const token = localStorage.getItem("token");
         return httpGet("http://localhost:3001/token/" + token, {})
