@@ -1,12 +1,16 @@
 {
-  "name": "autentificador",
-  "version": "0.0.1",
-  "description": "Autentifica las operaciones del sistema",
-  "dependencies": {
-    "body-parser": "^1.18.2",
-    "express": "^4.16.3",
-    "merge-json": "0.1.0-b.3",
-    "promise-mysql": "^3.2.1",
-    "ramda": "^0.25.0"
-  }
+    "name": "autentificador",
+    "version": "0.0.1",
+    "description": "Autentifica las operaciones del sistema",
+    "scripts": {
+        "start": "node src/autentificador"
+    },
+    "dependencies": {
+        "body-parser": "^1.18.2",
+        "express": "^4.16.3",
+        "jsonwebtoken": "^8.2.1",
+        "merge-json": "0.1.0-b.3",
+        "promise-mysql": "^3.2.1",
+        "ramda": "^0.25.0"
+    }
 }
